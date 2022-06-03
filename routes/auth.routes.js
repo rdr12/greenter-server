@@ -44,7 +44,7 @@ router.post("/signup", async (req, res, next) => {
       password: hashPassword,
     });
 
-    res.json("El usuario se ha registrado correctamente");
+    res.status(201).json("El usuario se ha registrado correctamente");
   } catch (error) {
     next(error);
   }
@@ -54,25 +54,13 @@ router.post("/signup", async (req, res, next) => {
 router.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
 
-  //CHEQUEAR CAMPOS
-  if (!email || !password) {
-    res
-      .status(400)
-      .json({
-        errorMessage: "Por favor, rellena todos los campos para continuar",
-      });
-    return;
-  }
-
   try {
     //CHEQUEA QUE EL EMAIL ESTE REGISTRADO Y BUSCA AL USUARIO
     const foundUser = await UserModel.findOne({ email });
     if (foundUser === null) {
-      res
-        .status(400)
-        .json({
-          errorMessage: "Dirección de correo electrónico no registrada",
-        });
+      res.status(400).json({
+        errorMessage: "Dirección de correo electrónico no registrada",
+      });
       return;
     }
 
@@ -114,11 +102,11 @@ router.post("/login", async (req, res, next) => {
 router.get("/verify", isAuthenticated, (req, res, next) => {
   // checkear que el token es valido
   // enviar al frontend la info del usuario del token
-  //   console.log(req.payload) // ! ESTO ES el req.session.user de M3
-  //   console.log("Pasando por la ruta, todo bien con el middleware")
-  //   res.json(req.payload)
-  const adminRole = req.payload.role;
-  res.status(200).json({ adminRole });
+  console.log(req.payload); // ! ESTO ES el req.session.user de M3
+  console.log("Pasando por la ruta, todo bien con el middleware");
+  res.json(req.payload);
+  //   const adminRole = req.payload.role;
+  //   res.status(200).json({ adminRole });
 });
 
 module.exports = router;
