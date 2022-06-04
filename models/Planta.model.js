@@ -13,7 +13,7 @@ const plantaSchema = new Schema({
     type: String,
     required: true
   },
-  habitatRecolección: {
+  habitatRecoleccion: {
     type: String,
     required: true
   },

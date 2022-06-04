@@ -11,6 +11,6 @@ const authRoutes = require("./auth.routes.js")
 router.use("/auth", authRoutes)
 
 const plantaRoutes = require("./planta.routes.js")
-router.use("/planta", plantaRoutes)
+router.use("/plantas", plantaRoutes)
 
 module.exports = router;
