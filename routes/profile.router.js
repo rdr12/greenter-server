@@ -7,7 +7,7 @@ const UserModel = require("../models/User.model.js");
 //ADMIN
 //GET "/profile/admin" => para ver perfil de Administrador
 router.get("/admin", async (req, res, next) => {
-  const userId = req.payload._id;
+  const userId = req.payload.id;
   try {
     const response = await UserModel.findById(userId);
     res.json(response);
@@ -29,7 +29,7 @@ router.get("/admin/plantas", async (req, res, next) => {
 //USER
 //GET "/profile" => para ver el perfil de usuario
 router.get("/", async (req, res, next) => {
-  const userId = req.payload._id;
+  const userId = req.payload.id;
   try {
     const response = await UserModel.findById(userId);
     res.json(response);
@@ -40,7 +40,7 @@ router.get("/", async (req, res, next) => {
 
 //PATCH "/profile/edit" => para editar usuario
 router.patch("/edit", async (req, res, next) => {
-  const userId = req.payload._id;
+  const userId = req.payload.id;
   const { image, username, email, password } = req.body;
   try {
     await UserModel.findByIdAndUpdate(userId, {
@@ -57,7 +57,7 @@ router.patch("/edit", async (req, res, next) => {
 
 //DELETE "/profile/delete" => para borrar usuario
 router.delete("/delete", async (req, res, next) => {
-  const userId = req.payload._id;
+  const userId = req.payload.id;
   try {
     await ComentariosModel.deleteMany({ user: userId });
     await UserModel.findByIdAndDelete(userId);
@@ -70,7 +70,7 @@ router.delete("/delete", async (req, res, next) => {
 //FAVORITES
 //POST "/favorites/:plantaId" => para añadir a favoritos
 router.post("/favorites/:plantaId", async (req, res, next) => {
-  const { plantaId } = req.payload._id;
+  const { plantaId } = req.payload.id;
   const id = req.params;
   try {
     await UserModel.findByIdAndUpdate(id, {

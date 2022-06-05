@@ -75,7 +75,7 @@ router.post("/login", async (req, res, next) => {
 
     //CREAR Y ENVIAR TOKEN
     const payload = {
-      _id: foundUser._id,
+      id: foundUser.id,
       email: foundUser.email,
       username: foundUser.username,
       role: foundUser.role, // ¡¡¿¿??ó isAdmin?
