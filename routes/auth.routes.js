@@ -41,7 +41,7 @@ router.post("/signup", async (req, res, next) => {
     await UserModel.create({
       username,
       email,
-      password: hashPassword,
+      password: hashPassword
     });
 
     res.status(201).json("El usuario se ha registrado correctamente");
@@ -75,12 +75,12 @@ router.post("/login", async (req, res, next) => {
 
     //CREAR Y ENVIAR TOKEN
     const payload = {
-      id: foundUser.id,
+      _id: foundUser._id,
       email: foundUser.email,
       username: foundUser.username,
-      role: foundUser.role, // ¡¡¿¿??ó isAdmin?
+      role: foundUser.role // ¡¡¿¿??ó isAdmin?
     };
-
+    
     const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
       algorithm: "HS256",
       expiresIn: "6h",

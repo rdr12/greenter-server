@@ -119,7 +119,7 @@ router.get("/:id/comentarios", async (req, res, next) => {
 
 //POST "/api/plantas/:id" => añadir comentarios
 router.post("/:id", isAuthenticated, async (req, res, next) => {
-  const user = req.payload.id;
+  const user = req.payload._id;
   const { id } = req.params;
   const { text } = req.body;
 
@@ -138,7 +138,7 @@ router.post("/:id", isAuthenticated, async (req, res, next) => {
   }
 });
 
-//DELETE "/api/plantas/:idComentarios/borrar-comentario" => borrar comentario
+//DELETE "/api/plantas/:idComentarios/borrar-comentario" => borrar comentarios
 router.delete("/:id/comentarios/borrar-comentario", async (req, res, next) => {
   const { idComentario } = req.params;
   try {

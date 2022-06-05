@@ -12,7 +12,7 @@ module.exports = (app) => {
 
     // handler para Token Auth
     if (err.status === 401) {
-      res.status(401).json({errorMessage: "Credenciales no has podido ser validadas"})
+      res.status(401).json({errorMessage: "Credenciales no han podido ser validadas"})
     }
 
     // only render if the error ocurred before sending the response
