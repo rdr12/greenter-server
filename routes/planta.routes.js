@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const PlantaModel = require("../models/Planta.model.js");
-// const isAuthenticated = require("../middlewares/isAuthenticated")
+const isAuthenticated = require("../middlewares/isAuthenticated");
+const ComentariosModel = require("../models/Comentarios.model");
 
 //CRUD
 
@@ -15,7 +16,7 @@ router.get("/", async (req, res, next) => {
 });
 
 //POST "api/plantas" => creamos una Planta nueva
-router.post("/", async (req, res, next) => {
+router.post("/", isAuthenticated, async (req, res, next) => {
   const {
     nombre,
     description,
@@ -23,6 +24,7 @@ router.post("/", async (req, res, next) => {
     habitatRecoleccion,
     principiosActivos,
     empleo,
+    image,
   } = req.body;
 
   try {
@@ -33,6 +35,7 @@ router.post("/", async (req, res, next) => {
       habitatRecoleccion,
       principiosActivos,
       empleo,
+      image,
     });
     res.json(response);
   } catch (error) {
@@ -53,7 +56,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 // DELETE "/api/plantas/:id" => borrar
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
 
   try {
@@ -65,7 +68,7 @@ router.delete("/:id", async (req, res, next) => {
 });
 
 // PATCH "/api/plantas/:id" => editar
-router.patch("/:id", async (req, res, next) => {
+router.patch("/:id", isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
   const {
     nombre,
@@ -74,18 +77,20 @@ router.patch("/:id", async (req, res, next) => {
     habitatRecoleccion,
     principiosActivos,
     empleo,
+    image,
   } = req.body;
-
-//   if (
-//     !nombre ||
-//     !description ||
-//     !parteUtilizada ||
-//     !habitatRecoleccion ||
-//     !principiosActivos ||
-//     !empleo
-//   ) {
-//     res.status(400).json("Para continuar debes rellenar todos los campos");
-//   }
+  //CLAUSULAS DE GUARDIA (si estos campos no existen le enviamos al front end algo que diga que todos los campos tienen que estar llenos)
+  //   if (
+  //     !nombre ||
+  //     !description ||
+  //     !parteUtilizada ||
+  //     !habitatRecoleccion ||
+  //     !principiosActivos ||
+  //     !empleo,
+  //     !image
+  //   ) {
+  //     res.status(403).json("Para poder continuar debes rellenar todos los campos");
+  //   }
   try {
     await PlantaModel.findByIdAndUpdate(id, {
       nombre,
@@ -94,8 +99,53 @@ router.patch("/:id", async (req, res, next) => {
       habitatRecoleccion,
       principiosActivos,
       empleo,
+      image,
     });
     res.json("La información ha sido actualizada");
+  } catch (error) {
+    next(error);
+  }
+});
+
+//GET "/api/plantas/:id/comentarios" => para ver los comentarios ¡¡POPULATE!! RELACIÓN CON USERMODEL
+router.get("/:id/comentarios", async (req, res, next) => {
+  //const{id} = req.params
+  try {
+    //const response = await ComentariosModel.find({planta:  `ObjectId("${id}")`});
+    const response = await ComentariosModel.find().populate("user");
+    res.json(response);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//POST "/api/plantas/:id" => añadir comentarios
+router.post("/:id", isAuthenticated, async (req, res, next) => {
+  const user = req.payload._id;
+  const { id } = req.params;
+  const { text } = req.body;
+
+  if (!text) {
+    res.status(400).json({
+      errorMessage: "Por favor, rellene todos los campos para continuar",
+    });
+    return;
+  }
+
+  try {
+    const response = await ComentariosModel.create({ user, planta: id, text });
+    res.json(response);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//DELETE "/api/plantas/:idComentarios/borrar-comentario" => borrar comentarios
+router.delete("/:id/comentarios/borrar-comentarios", async (req, res, next) => {
+  const { idComentarios } = req.params;
+  try {
+    await ComentariosModel.findByIdAndDelete(idComentarios);
+    res.json("Comentario borrado");
   } catch (error) {
     next(error);
   }

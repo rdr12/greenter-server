@@ -1,7 +1,8 @@
+//MODELO DE COMENTARIOS
 const { default: mongoose } = require("mongoose");
 const { Schema, model } = require("mongoose");
 
-const commentarySchema = new Schema({
+const comentariosSchema = new Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -18,6 +19,6 @@ const commentarySchema = new Schema({
   },
 });
 
-const CommentaryModel = model("Commentary", commentarySchema);
+const CommentaryModel = model("Comentarios", comentariosSchema);
 
 module.exports = CommentaryModel;

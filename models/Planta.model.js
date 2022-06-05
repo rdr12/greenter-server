@@ -1,25 +1,33 @@
+//MODELO DE PLANTA
 const { Schema, model } = require("mongoose");
 
 const plantaSchema = new Schema({
+  //   user: {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "User",
+  //   },
   nombre: {
     type: String,
-    required: true
+    required: true,
+  },
+  image: {
+    type: String,
   },
   description: {
     type: String,
-    required: true
+    required: true,
   },
   parteUtilizada: {
     type: String,
-    required: true
+    required: true,
   },
   habitatRecoleccion: {
     type: String,
-    required: true
+    required: true,
   },
   principiosActivos: {
     type: String,
-    required: true
+    required: true,
   },
 
   empleo: {
@@ -32,11 +40,6 @@ const plantaSchema = new Schema({
       "Dolorosos",
       "Genitourinarias ",
     ],
-  },
-
-  owner: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
   },
 });
 const PlantaModel = model("Planta", plantaSchema);

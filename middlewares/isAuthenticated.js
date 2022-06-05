@@ -1,3 +1,4 @@
+//AUTENTIFICACIÓN
 const { expressjwt } = require("express-jwt");
 
 const isAuthenticated = expressjwt({
