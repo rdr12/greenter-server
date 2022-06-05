@@ -78,10 +78,8 @@ router.post("/login", async (req, res, next) => {
       _id: foundUser._id,
       email: foundUser.email,
       username: foundUser.username,
-      role: foundUser.role, // ¡¡¿¿??o isAdmin?
+      role: foundUser.role, // ¡¡¿¿??ó isAdmin?
     };
-    // recomendacion es no guardar la contraseña
-    // si hubiesen propiedades de isAdmin o isVip se recomienda agregarlas para navegacion de FE
 
     const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
       algorithm: "HS256",
@@ -96,11 +94,6 @@ router.post("/login", async (req, res, next) => {
 
 // GET "/api/auth/verify" => checkea que el token es valido, y el rol del admin
 router.get("/verify", isAuthenticated, (req, res, next) => {
-  // checkear que el token es valido
-  // enviar al frontend la info del usuario del token
-  //   console.log(req.payload); // ! ESTO ES el req.session.user de M3
-  //   console.log("Pasando por la ruta, todo bien con el middleware");
-  //   res.json(req.payload);
   const adminRole = req.payload.role;
   res.status(200).json({ adminRole });
 });

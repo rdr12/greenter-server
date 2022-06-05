@@ -8,7 +8,7 @@ router.get("/", (req, res, next) => {
 
 // You put the next routes here 👇
 // example: router.use("/auth", authRoutes)
-//RUTA AUTH
+//RUTA AUTH Cast to ObjectId failed for value
 const authRoutes = require("./auth.routes.js")
 router.use("/auth", authRoutes)
 
