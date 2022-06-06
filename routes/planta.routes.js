@@ -2,6 +2,7 @@ const router = require("express").Router();
 const PlantaModel = require("../models/Planta.model.js");
 const isAuthenticated = require("../middlewares/isAuthenticated");
 const ComentariosModel = require("../models/Comentarios.model");
+const fileUploader = require("../middlewares/uploader")
 
 //CRUD
 
@@ -16,7 +17,7 @@ router.get("/", async (req, res, next) => {
 });
 
 //POST "api/plantas" => creamos una Planta nueva
-router.post("/", isAuthenticated, async (req, res, next) => {
+router.post("/", isAuthenticated, fileUploader.single("image"), async (req, res, next) => {
   const {
     nombre,
     description,
@@ -24,8 +25,7 @@ router.post("/", isAuthenticated, async (req, res, next) => {
     habitatRecoleccion,
     principiosActivos,
     empleo,
-    image,
-  } = req.body;
+    } = req.body;
 
   try {
     const response = await PlantaModel.create({
@@ -35,7 +35,7 @@ router.post("/", isAuthenticated, async (req, res, next) => {
       habitatRecoleccion,
       principiosActivos,
       empleo,
-      image,
+      image: req.file.path,
     });
     res.json(response);
   } catch (error) {
@@ -99,7 +99,7 @@ router.patch("/:id", isAuthenticated, async (req, res, next) => {
       habitatRecoleccion,
       principiosActivos,
       empleo,
-      image,
+      image
     });
     res.json("La información ha sido actualizada");
   } catch (error) {

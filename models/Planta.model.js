@@ -32,14 +32,15 @@ const plantaSchema = new Schema({
 
   empleo: {
     type: String,
-    enum: [
-      "Digestivas",
-      "Cardiovasculares",
-      "Respiratorias",
-      "Nerviosos",
-      "Dolorosos",
-      "Genitourinarias ",
-    ],
+    // enum: [
+    //   "Digestivas",
+    //   "Cardiovasculares",
+    //   "Respiratorias",
+    //   "Nerviosos",
+    //   "Dolorosos",
+    //   "Genitourinarias ",
+    // ],
+    required: true,
   },
 });
 const PlantaModel = model("Planta", plantaSchema);
