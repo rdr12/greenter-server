@@ -5,7 +5,7 @@ const isAdmin = (req, res, next) => {
   } else {
     res.status(401).json({
       errorMessage:
-        "No tienes permiso para navegar a esta ruta. Inicia sesión como administrador para continuar.",
+        "No tienes permiso para navegar a esta ruta.",
     });
   }
 };

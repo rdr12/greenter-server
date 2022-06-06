@@ -48,9 +48,9 @@ catch(error){
 //PATCH "/profile/edit" => para editar usuario
 router.patch("/edit", async (req, res, next)=>{
     const userId = req.payload._id
-    const {image, username, email, password} = req.body
+    const {username, email, password} = req.body
     try{
-        await UserModel.findByIdAndUpdate(userId, {image, username, email, password})
+        await UserModel.findByIdAndUpdate(userId, {username, email, password})
         res.json("Perfil actualizado")
     }
     catch(error){
@@ -62,7 +62,7 @@ router.patch("/edit", async (req, res, next)=>{
 router.delete("/delete", async (req, res, next)=>{
     const userId = req.payload._id
     try{
-        await ComentariosModel.deleteMany({user: userId})
+        await ComentariosModel.deleteMany({user: userId}) //filtro y opción a borrar
         await UserModel.findByIdAndDelete(userId)
         res.json("Perfil borrado")
     }
@@ -70,6 +70,8 @@ router.delete("/delete", async (req, res, next)=>{
         next(error)
     }
 })
+
+
 
 //FAVORITES
 //POST "/favorites/:plantaId" => para añadir a favoritos
