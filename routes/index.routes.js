@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const isAuthenticated = require("../middlewares/isAuthenticated");
+// const isAuthenticated = require("../middlewares/isAuthenticated");
 
 
 router.get("/", (req, res, next) => {
@@ -16,13 +16,19 @@ router.use("/auth", authRoutes)
 const plantaRoutes = require("./planta.routes.js")
 router.use("/plantas", plantaRoutes)
 
-// //RUTA UPLOAD IMAGE
-// const uploadRoutes = require("./upload.routes.js")
-// router.use("/upload", uploadRoutes)
+// RUTA PROFILE
+const profileRoutes = require("./profile.routes.js")
+router.use("/profile", profileRoutes)
 
-//RUTA PROFILE
-const profileRoutes = require("./profile.router")
-router.use("/profile", isAuthenticated, profileRoutes)
+//RUTA CLOUDINARY
+const uploaderRoutes = require("./uploader.routes")
+router.use("/uploader", uploaderRoutes)
+
+
+
+
+
+
 
 
 module.exports = router;

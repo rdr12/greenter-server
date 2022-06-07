@@ -2,7 +2,7 @@ const router = require("express").Router();
 const PlantaModel = require("../models/Planta.model.js");
 const isAuthenticated = require("../middlewares/isAuthenticated");
 const ComentariosModel = require("../models/Comentarios.model");
-const fileUploader = require("../middlewares/uploader")
+const fileUploader = require("../middlewares/cloudinary")
 
 //CRUD
 
@@ -17,7 +17,7 @@ router.get("/", async (req, res, next) => {
 });
 
 //POST "api/plantas" => creamos una Planta nueva
-router.post("/", isAuthenticated, fileUploader.single("image"), async (req, res, next) => {
+router.post("/", isAuthenticated, async (req, res, next) => {
   const {
     nombre,
     description,
@@ -109,8 +109,10 @@ router.patch("/:id", isAuthenticated, async (req, res, next) => {
 
 //GET "/api/plantas/:id/comentarios" => para ver los comentarios ¡¡POPULATE!! RELACIÓN CON USERMODEL
 router.get("/:id/comentarios", async (req, res, next) => {
+  const {id} = req.params
   try {
-    const response = await ComentariosModel.find().populate("user");
+    const response = await ComentariosModel.find({"planta":id}).populate("user");
+    console.log
     res.json(response);
   } catch (error) {
     next(error);
