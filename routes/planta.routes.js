@@ -17,7 +17,7 @@ router.get("/", async (req, res, next) => {
 });
 
 //POST "api/plantas" => creamos una Planta nueva
-router.post("/", isAuthenticated, async (req, res, next) => {
+router.post("/plantaAdd", isAuthenticated, async (req, res, next) => {
   const {
     nombre,
     description,
