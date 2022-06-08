@@ -13,9 +13,7 @@ const userSchema = new Schema(
       unique: true,
       required: true,
     },
-
-    password: String,
-
+  
     role: {
       type: String,
       enum: ["user", "admin"],
@@ -30,7 +28,12 @@ const userSchema = new Schema(
       type: [Schema.Types.ObjectId],
       ref: "Planta",
     },
+    password: String,
+    profilePic: {
+      type : String
+    }
   },
+  
   {
     timestamps: true,
   }

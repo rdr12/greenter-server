@@ -2,7 +2,7 @@ const router = require("express").Router();
 const PlantaModel = require("../models/Planta.model.js");
 const isAuthenticated = require("../middlewares/isAuthenticated");
 const ComentariosModel = require("../models/Comentarios.model");
-const fileUploader = require("../middlewares/cloudinary")
+// const uploader = require("../middlewares/cloudinary")
 
 //CRUD
 
@@ -25,6 +25,7 @@ router.post("/", isAuthenticated, async (req, res, next) => {
     habitatRecoleccion,
     principiosActivos,
     empleo,
+    image
     } = req.body;
 
   try {
@@ -35,7 +36,7 @@ router.post("/", isAuthenticated, async (req, res, next) => {
       habitatRecoleccion,
       principiosActivos,
       empleo,
-      image: req.file.path,
+      image
     });
     res.json(response);
   } catch (error) {
@@ -99,7 +100,7 @@ router.patch("/:id", isAuthenticated, async (req, res, next) => {
       habitatRecoleccion,
       principiosActivos,
       empleo,
-      image
+      profilePic: image
     });
     res.json("La información ha sido actualizada");
   } catch (error) {
