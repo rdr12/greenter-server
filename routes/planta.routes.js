@@ -24,11 +24,19 @@ router.post("/", isAuthenticated, async (req, res, next) => {
     parteUtilizada,
     habitatRecoleccion,
     principiosActivos,
-    empleo,
-    image
+    empleo
+    
     } = req.body;
 
+    
+
   try {
+
+    const plantaEncontrada = await PlantaModel.findOne({nombre})
+    if (plantaEncontrada !==null) {
+      res.status(400).json({errorMessage:"Ya existe una planta con ese nombre"})
+      return;
+    }
     const response = await PlantaModel.create({
       nombre,
       description,
@@ -36,7 +44,7 @@ router.post("/", isAuthenticated, async (req, res, next) => {
       habitatRecoleccion,
       principiosActivos,
       empleo,
-      image
+      // image:req.file.path
     });
     res.json(response);
   } catch (error) {
@@ -78,7 +86,7 @@ router.patch("/:id", isAuthenticated, async (req, res, next) => {
     habitatRecoleccion,
     principiosActivos,
     empleo,
-    image,
+    // image,
   } = req.body;
   //CLAUSULAS DE GUARDIA (si estos campos no existen le enviamos al front end algo que diga que todos los campos tienen que estar llenos)
   //   if (
@@ -100,7 +108,7 @@ router.patch("/:id", isAuthenticated, async (req, res, next) => {
       habitatRecoleccion,
       principiosActivos,
       empleo,
-      profilePic: image
+      // image
     });
     res.json("La información ha sido actualizada");
   } catch (error) {
