@@ -135,7 +135,7 @@ router.get("/:id/details", async (req, res, next) => {
 });
 
 //POST "/api/plantas/:id" => añadir comentarios
-router.post("/:id/", isAuthenticated, async (req, res, next) => {
+router.post("/:id/details", isAuthenticated, async (req, res, next) => {
   const user = req.payload._id;
   const { id } = req.params;
   const { text } = req.body;
