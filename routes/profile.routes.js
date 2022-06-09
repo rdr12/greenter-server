@@ -5,11 +5,11 @@ const UserModel = require("../models/User.model.js");
 const isAuthenticated = require("../middlewares/isAuthenticated")
 
 
-// POST "/api/profile" to get logged user profile
+// GET "/api/profile" to get logged user profile
 router.get("/", isAuthenticated, async (req, res, next) => {
-    const { _id } = req.payload
+    const { userId } = req.payload
     try {
-      const response = await UserModel.findById(_id)
+      const response = await UserModel.findById(userId)
       res.json(response)
     } catch(err) {
       next(err)
@@ -19,11 +19,11 @@ router.get("/", isAuthenticated, async (req, res, next) => {
   // PATCH "/api/profile" to get logged user profile
   router.patch("/", isAuthenticated, async (req, res, next) => {
   
-    const { _id } = req.payload
+    const { userId } = req.payload._id
     const { name, email, image } = req.body
   
     try {
-      await UserModel.findByIdAndUpdate(_id, {
+      await UserModel.findByIdAndUpdate(userId, {
         name, 
         email,
         profilePic: image

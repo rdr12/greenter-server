@@ -20,9 +20,9 @@ const userSchema = new Schema(
       default: "user",
     },
 
-    image: {
-      type: String,
-    },
+    // image: {
+    //   type: String,
+    // },
 
     favorites: {
       type: [Schema.Types.ObjectId],

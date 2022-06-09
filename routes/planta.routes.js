@@ -116,13 +116,19 @@ router.patch("/:id", isAuthenticated, async (req, res, next) => {
   }
 });
 
+
+
+
+
+
 //GET "/api/plantas/:id/comentarios" => para ver los comentarios ¡¡POPULATE!! RELACIÓN CON USERMODEL
 router.get("/:id/comentarios", async (req, res, next) => {
-  const {id} = req.params
+ 
+  console.log("esto es un id", id)
   try {
-    const response = await ComentariosModel.find({"planta":id}).populate("user");
-    console.log
+    const response = await ComentariosModel.find().populate("user");
     res.json(response);
+    
   } catch (error) {
     next(error);
   }
@@ -149,15 +155,15 @@ router.post("/:id", isAuthenticated, async (req, res, next) => {
   }
 });
 
-//DELETE "/api/plantas/:idComentarios/borrar-comentario" => borrar comentarios
-router.delete("/:id/comentarios/borrar-comentario", async (req, res, next) => {
-  const { idComentario } = req.params;
-  try {
-    await ComentariosModel.findByIdAndDelete(idComentario);
-    res.json("Comentario borrado");
-  } catch (error) {
-    next(error);
-  }
-});
+// //DELETE "/api/plantas/:idComentarios/borrar-comentario" => borrar comentarios
+// router.delete("/:id/comentarios/borrar-comentario", async (req, res, next) => {
+//   const { idComentario } = req.params;
+//   try {
+//     await ComentariosModel.findByIdAndDelete(idComentario);
+//     res.json("Comentario borrado");
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 module.exports = router;
