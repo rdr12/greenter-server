@@ -122,9 +122,9 @@ router.patch("/:id", isAuthenticated, async (req, res, next) => {
 
 
 //GET "/api/plantas/:id/comentarios" => para ver los comentarios ¡¡POPULATE!! RELACIÓN CON USERMODEL
-router.get("/:id/comentarios", async (req, res, next) => {
+router.get("/:id/details", async (req, res, next) => {
  
-  console.log("esto es un id", id)
+  // console.log("esto es un id", id)
   try {
     const response = await ComentariosModel.find().populate("user");
     res.json(response);
@@ -135,7 +135,7 @@ router.get("/:id/comentarios", async (req, res, next) => {
 });
 
 //POST "/api/plantas/:id" => añadir comentarios
-router.post("/:id", isAuthenticated, async (req, res, next) => {
+router.post("/:id/", isAuthenticated, async (req, res, next) => {
   const user = req.payload._id;
   const { id } = req.params;
   const { text } = req.body;
