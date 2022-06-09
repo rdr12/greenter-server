@@ -19,9 +19,9 @@ router.get("/", isAuthenticated, async (req, res, next) => {
   // PATCH "/api/profile" to get logged user profile
   router.patch("/", isAuthenticated, async (req, res, next) => {
   
-    const { _id } = req.payload._id
+    const { _id } = req.payload
     const { name, email, image } = req.body
-  
+    console.log(req.body)
     try {
       await UserModel.findByIdAndUpdate(_id, {
         name, 

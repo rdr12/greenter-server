@@ -24,10 +24,6 @@ const userSchema = new Schema(
     //   type: String,
     // },
 
-    // favorites: {
-    //   type: [Schema.Types.ObjectId],
-    //   ref: "Planta",
-    // },
     password: String,
     profilePic: {
       type : String
